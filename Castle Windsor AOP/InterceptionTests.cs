@@ -36,6 +36,8 @@ namespace Castle_Windsor_AOP
             _tradeManager = _container.Resolve<ITradeManager>();
         }
 
+        #region Tests
+
         [Test]
         public void AddTrade_UserIsPermittedToViewTrades_TradeIsAdded()
         {
@@ -82,6 +84,18 @@ namespace Castle_Windsor_AOP
             Assert.Throws<SecurityException>(() => _tradeManager.GetTodaysTrades());
         }
 
+        [Test]
+        public void Login_ActionCalled_PermissionsChecksAreSkipped()
+        {
+            PermissionsStub.IsUserPermittedToContinue = false;
+
+            Assert.DoesNotThrow(() => _tradeManager.Login());
+        }
+
+        #endregion
+
+        #region Private Methods
+
         /// <summary>
         /// Registers our custom permissions interceptor.
         /// </summary>
@@ -110,5 +124,7 @@ namespace Castle_Windsor_AOP
                     var x = c.Interceptors(InterceptorReference.ForType<IInterceptor>()).Anywhere; 
                 }));
         }
+
+        #endregion
     }
 }

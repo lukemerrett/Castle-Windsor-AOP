@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="DTOs\Trade.cs" />
     <Compile Include="InterceptionTests.cs" />
+    <Compile Include="Interceptors\Attributes\DoNotPerformPermissionCheck.cs" />
     <Compile Include="Interceptors\PermissionsInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceLayer\ITradeManager.cs" />

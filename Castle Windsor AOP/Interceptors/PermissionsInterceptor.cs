@@ -1,4 +1,5 @@
 ﻿using Castle.DynamicProxy;
+using Castle_Windsor_AOP.Interceptors.Attributes;
 using Castle_Windsor_AOP.ServiceLayer;
 using System;
 using System.Collections.Generic;
@@ -22,8 +23,14 @@ namespace Castle_Windsor_AOP.Interceptors
             {
                 invocation.Proceed();
             }
-
-            if (PermissionsStub.IsUserPermittedToContinue)
+            // We can use a custom attribute to block any permissions checks (eg for logins, public controller actions etc).
+            // You can use attributes to pass conditions to the interceptor as well (eg if we wanted to check a specific role).
+            // Note you can also inspect the parameters passed into the method, if the permissions are based on the data being acted on.
+            else if (AttributeExistsOnMethod<DoNotPerformPermissionCheck>(invocation))
+            {
+                invocation.Proceed();
+            }
+            else if (PermissionsStub.IsUserPermittedToContinue)
             {
                 invocation.Proceed();
             }
@@ -34,5 +41,12 @@ namespace Castle_Windsor_AOP.Interceptors
         }
 
         #endregion
+
+        private static bool AttributeExistsOnMethod<AttributeToCheck>(IInvocation invocation)
+        {
+            var attribute = Attribute.GetCustomAttribute(invocation.Method, typeof(AttributeToCheck), true);
+
+            return attribute != null;
+        }
     }
 }

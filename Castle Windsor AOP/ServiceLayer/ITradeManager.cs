@@ -1,4 +1,5 @@
 ﻿using Castle_Windsor_AOP.DTOs;
+using Castle_Windsor_AOP.Interceptors.Attributes;
 using System;
 using System.Collections.Generic;
 
@@ -17,5 +18,11 @@ namespace Castle_Windsor_AOP.ServiceLayer
         /// </summary>
         /// <returns>A list of trades.</returns>
         List<Trade> GetTodaysTrades();
+
+        /// <summary>
+        /// Logs the current user in to the system.
+        /// </summary>
+        [DoNotPerformPermissionCheck]
+        void Login();
     }
 }

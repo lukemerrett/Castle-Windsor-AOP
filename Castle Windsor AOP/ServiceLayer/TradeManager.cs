@@ -47,6 +47,14 @@ namespace Castle_Windsor_AOP.ServiceLayer
         public List<Trade> GetTodaysTrades()
         {
             return _tradeListing;
-        }        
+        }
+
+        /// <summary>
+        /// Logs the current user in to the system.
+        /// </summary>
+        public void Login()
+        {
+            PermissionsStub.IsUserPermittedToContinue = true;
+        }
     }
 }

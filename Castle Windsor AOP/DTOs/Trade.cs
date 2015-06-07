@@ -8,7 +8,7 @@ namespace Castle_Windsor_AOP.DTOs
 {
     public class Trade
     {
-        public int TradeId { get; set; }
+        public Guid TradeId { get; set; }
 
         public DateTime DateExecuted { get; set; }
     }

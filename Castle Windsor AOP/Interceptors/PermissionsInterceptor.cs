@@ -17,6 +17,12 @@ namespace Castle_Windsor_AOP.Interceptors
         {
             Console.WriteLine("Checking Permissions");
 
+            // We only want this inteception to apply to methods with public accessibility.
+            if (!invocation.Method.IsPublic)
+            {
+                invocation.Proceed();
+            }
+
             if (PermissionsStub.IsUserPermittedToContinue)
             {
                 invocation.Proceed();
